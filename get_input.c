@@ -6,7 +6,7 @@
 /*   By: ayel-arr <ayel-arr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 08:25:36 by ayel-arr          #+#    #+#             */
-/*   Updated: 2025/01/30 20:26:23 by ayel-arr         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:03:16 by ayel-arr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ void	execute3(int fds[2], int pfd[2], char ***cmds_args, char **argv)
 	{
 		dup2(pfd2[0], 0);
 		dup2(pfd[1], 1);
+		close(pfd[1]);
+		close(pfd2[0]);
 		execve(cmds_args[0][0], cmds_args[0], NULL);
 		perror("execve\n");
 		exit(1);
 	}
+	close(pfd2[0]);
 }

@@ -6,7 +6,7 @@
 /*   By: ayel-arr <ayel-arr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 14:40:58 by ayel-arr          #+#    #+#             */
-/*   Updated: 2025/01/30 20:29:02 by ayel-arr         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:01:32 by ayel-arr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 void	check_files(int argc, char **argv, int fds[2])
 {
-	if (access(argv[argc - 1], F_OK) == 0 && access(argv[argc - 1], W_OK) == -1)
-		return (perror(argv[argc - 1]), exit(1));
+	if (argc == 1)
+	{
+		perror("\e[31mThe program should be executed as follows:\n"
+			"\t./pipex_bonus here_doc LIMITER cmd cmd1 file\n");
+		exit(1);
+	}
 	if (ft_strncmp("here_doc", argv[1], 8) == 0)
 	{
 		if (argc < 6)
@@ -24,6 +28,8 @@ void	check_files(int argc, char **argv, int fds[2])
 				"\t./pipex_bonus here_doc LIMITER cmd cmd1 file\n");
 			exit(1);
 		}
+		if (access(argv[argc - 1], F_OK) == 0 && access(argv[argc - 1], W_OK) == -1)
+			return (perror(argv[argc - 1]), exit(1));
 		fds[0] = 0;
 		fds[1] = open(argv[argc - 1], O_CREAT | O_WRONLY | O_APPEND, 0777);
 		return ;
@@ -36,6 +42,8 @@ void	check_files(int argc, char **argv, int fds[2])
 	}
 	if (access(argv[1], R_OK) == -1)
 		return (perror(argv[1]), exit(1));
+	if (access(argv[argc - 1], F_OK) == 0 && access(argv[argc - 1], W_OK) == -1)
+		return (perror(argv[argc - 1]), exit(1));
 	fds[0] = open(argv[1], O_RDONLY);
 	fds[1] = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0777);
 }

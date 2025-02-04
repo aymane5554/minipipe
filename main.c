@@ -6,7 +6,7 @@
 /*   By: ayel-arr <ayel-arr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 14:40:21 by ayel-arr          #+#    #+#             */
-/*   Updated: 2025/01/30 20:30:19 by ayel-arr         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:02:29 by ayel-arr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,24 +113,22 @@ int	main(int argc, char **argv, char **env)
 	int		pfd[2];
 	int		i;
 
-	if (argc == 1)
-		exit(1);
-	pipe(pfd);
 	i = 1;
 	check_files(argc, argv, fds);
 	allocate(&cmds_args, ft_strncmp("here_doc", argv[1], 8), argc, argv);
 	prologue(argc, argv, env, cmds_args);
+	pipe(pfd);
 	if (ft_strncmp("here_doc", argv[1], 8) == 0)
 		execute3(fds, pfd, cmds_args, argv);
 	else
 		execute(fds, pfd, cmds_args, 0);
 	while (i < cmds_number(cmds_args) - 1)
 	{
-		wait(&status);
 		execute2(fds, pfd, cmds_args, i);
 		i++;
 	}
-	wait(&status);
 	execute(fds, pfd, cmds_args, i);
+	while (wait(&status) >= 0)
+		continue ;
 	return (epilogue(fds, pfd, cmds_args), 0);
 }
