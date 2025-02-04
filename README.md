@@ -1,6 +1,6 @@
 # Minipipe
 
-## instalation:
+## Setup:
 1.  ```bash
     git clone https://github.com/aymane5554/minipipe.git minipipe
     ```
