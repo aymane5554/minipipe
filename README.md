@@ -1,8 +1,13 @@
 # Minipipe
 
 ## instalation:
-1.  clone the repo
-2.  ```bash
+1.  ```bash
+    git clone https://github.com/aymane5554/minipipe.git minipipe
+    ```
+2. ```bash
+   cd minipipe
+   ```
+3.  ```bash
     make
     ```
 ## Usage:
